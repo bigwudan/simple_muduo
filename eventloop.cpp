@@ -1,9 +1,11 @@
 #include "eventloop.h"
+#include "poller.h"
+#include "channel.h"
 
 
 
 EventLoop* t_loopInThisThread = 0;
-
+const int kPollTimeMs = 10000;
 
 EventLoop::EventLoop()
     :looping_(false),threadId_(static_cast<pid_t>(::syscall(SYS_gettid)))
@@ -42,14 +44,23 @@ void EventLoop::abortNotInLoopThread()
 
 void EventLoop::loop()
 {
-    assert(!looping_);
-    assertInLoopThread();
-    looping_ = true;
+	looping_ = true;
+	quit_ = false;  // FIXME: what if someone calls quit() before loop() ?
 
-    ::poll(NULL, 0, 5*1000);
-    std::cout << "eventloop " << this << "stop looping"<<std::endl;
-    looping_ = false;
 
+	while (!quit_)
+	{
+		activeChannels_.clear();
+		poller_->poll(kPollTimeMs, &activeChannels_);
+		for(ChannelList::iterator it = activeChannels_.begin(); it != activeChannels_.end(); ++it)
+		{
+
+			(*it)->handleEvent();
+
+		}	
+
+	}
+	looping_ = false;
 
 }
 

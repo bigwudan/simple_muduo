@@ -8,6 +8,10 @@
 #include <assert.h>
 #include <signal.h>
 #include <poll.h>
+#include <vector>
+
+class Channel;
+class Poller;
 
 class EventLoop
 {
@@ -34,8 +38,14 @@ public:
     }
 private:
     void abortNotInLoopThread();
+	typedef std::vector<Channel *> ChannelList;
+
+
     bool looping_;
-    const pid_t threadId_;
+	const pid_t threadId_;
+	bool quit_;
+	Poller * poller_;
+	ChannelList activeChannels_;
             
 
 
