@@ -1,10 +1,22 @@
 #include <iostream>
-#include "eventloop.h"
+#include <unistd.h>
+#include "thread.h"
+
+void threadFunc()
+{
+	
+	std::cout << "finish" << std::endl;
+	
+}
 
 
 int main()
 {
-    EventLoop loop;
-    std::cout << "nihao" << std::endl;
-
+	Thread thread(threadFunc);
+	thread.start();
+	pthread_exit(NULL);
+	sleep(10);
+	
 }
+
+
