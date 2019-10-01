@@ -1,0 +1,76 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Channel	channel.h	/^class Channel$/;"	c
+EVENTLOOP_H	eventloop.h	2;"	d
+EventCallback	channel.h	/^	typedef std::function<void()> EventCallback;$/;"	t	class:Channel
+EventLoop	eventloop.cpp	/^EventLoop::EventLoop()$/;"	f	class:EventLoop
+EventLoop	eventloop.h	/^class EventLoop$/;"	c
+Thread	thread.cpp	/^Thread::Thread(ThreadFunc func, const string& n)$/;"	f	class:Thread
+Thread	thread.h	/^class Thread$/;"	c
+ThreadData	thread.cpp	/^	ThreadData(ThreadFunc func,$/;"	f	struct:ThreadData
+ThreadData	thread.cpp	/^struct ThreadData$/;"	s	file:
+ThreadFunc	thread.cpp	/^	typedef Thread::ThreadFunc ThreadFunc;$/;"	t	struct:ThreadData	file:
+ThreadFunc	thread.h	/^	typedef std::function<void ()> ThreadFunc;$/;"	t	class:Thread
+_CHANNEL_H	channel.h	2;"	d
+_THREAD_H	thread.h	2;"	d
+abortNotInLoopThread	eventloop.cpp	/^void EventLoop::abortNotInLoopThread()$/;"	f	class:EventLoop
+assertInLoopThread	eventloop.h	/^    void assertInLoopThread(){$/;"	f	class:EventLoop
+disableAll	channel.h	/^	void disableAll(){ events_ = kNoneEvent; update();}$/;"	f	class:Channel
+disableWriting	channel.h	/^	void disableWriting(){ events_ &= ~kWriteEvent; update();}$/;"	f	class:Channel
+enableReading	channel.h	/^	void enableReading(){ events_ |= kReadEvent; update();}$/;"	f	class:Channel
+enableWriting	channel.h	/^	void enableWriting(){ events_ |= kWriteEvent; update();}$/;"	f	class:Channel
+errorCallback_	channel.h	/^		EventCallback errorCallback_;$/;"	m	class:Channel
+events	channel.h	/^	int events() const {return events_;}$/;"	f	class:Channel
+events_	channel.h	/^		int events_;$/;"	m	class:Channel
+fd	channel.h	/^	int fd() const {return fd_;}$/;"	f	class:Channel
+fd_	channel.h	/^		const int fd_;$/;"	m	class:Channel
+func_	thread.cpp	/^	ThreadFunc func_;$/;"	m	struct:ThreadData	file:
+func_	thread.h	/^	ThreadFunc func_;$/;"	m	class:Thread
+g_loop	test_main.cpp	/^EventLoop * g_loop;$/;"	v
+getCurrPid	eventloop.cpp	/^getCurrPid()$/;"	f
+getEventLoopOfCurrentThread	eventloop.cpp	/^EventLoop* getEventLoopOfCurrentThread()$/;"	f
+index	channel.h	/^	int index(){return index_;}$/;"	f	class:Channel
+index_	channel.h	/^		int index_;$/;"	m	class:Channel
+isInLoopThread	eventloop.h	/^    bool isInLoopThread() const{$/;"	f	class:EventLoop
+isNoneEvent	channel.h	/^	bool isNoneEvent() const {return events_ == kNoneEvent;}$/;"	f	class:Channel
+join	thread.cpp	/^int Thread::join()$/;"	f	class:Thread
+joined_	thread.h	/^	bool       joined_;$/;"	m	class:Thread
+kNodeEvent	channel.h	/^		static const int kNodeEvent;$/;"	m	class:Channel
+kReadEvent	channel.h	/^		static const int kReadEvent;$/;"	m	class:Channel
+kWriteEvent	channel.h	/^		static const int kWriteEvent;$/;"	m	class:Channel
+loop	eventloop.cpp	/^void EventLoop::loop()$/;"	f	class:EventLoop
+loop_	channel.h	/^		EventLoop* loop_;$/;"	m	class:Channel
+looping_	eventloop.h	/^    bool looping_;$/;"	m	class:EventLoop
+main	test_main.cpp	/^int main()$/;"	f
+name	thread.h	/^	const string& name() const { return name_; }$/;"	f	class:Thread
+name_	thread.cpp	/^	string name_;$/;"	m	struct:ThreadData	file:
+name_	thread.h	/^	string     name_;$/;"	m	class:Thread
+numCreated	thread.h	/^	static int numCreated() { return numCreated_; }$/;"	f	class:Thread
+numCreated_	thread.h	/^	static int numCreated_;$/;"	m	class:Thread
+ownerLoop	channel.h	/^	EventLoop* ownerLoop(){return loop_;}$/;"	f	class:Channel
+pthreadId_	thread.h	/^	pthread_t  pthreadId_;$/;"	m	class:Thread
+readCallback_	channel.h	/^		EventCallback readCallback_;$/;"	m	class:Channel
+revents_	channel.h	/^		int revents_;$/;"	m	class:Channel
+runInThread	thread.cpp	/^	void runInThread()$/;"	f	struct:ThreadData
+setErrorCallback	channel.h	/^	void setErrorCallback(const EventCallback& cb){$/;"	f	class:Channel
+setReadCallback	channel.h	/^	void setReadCallback(const EventCallback& cb){$/;"	f	class:Channel
+setWriteCallback	channel.h	/^	void setWriteCallback(const EventCallback& cb){$/;"	f	class:Channel
+set_index	channel.h	/^	void set_index(int idx){index_ = idx;}$/;"	f	class:Channel
+set_revents	channel.h	/^	void set_revents(int revt){revents_ = revt;}$/;"	f	class:Channel
+start	thread.cpp	/^void Thread::start()$/;"	f	class:Thread
+startThread	thread.cpp	/^void* startThread(void* obj)$/;"	f
+started	thread.h	/^	bool started() const { return started_; }$/;"	f	class:Thread
+started_	thread.h	/^	bool       started_;$/;"	m	class:Thread
+t_loopInThisThread	eventloop.cpp	/^EventLoop* t_loopInThisThread = 0;$/;"	v
+threadFunc	test_main.cpp	/^void threadFunc()$/;"	f
+threadId_	eventloop.h	/^    const pid_t threadId_;$/;"	m	class:EventLoop
+tid	thread.h	/^	pid_t tid() const { return tid_; }$/;"	f	class:Thread
+tid_	thread.cpp	/^	pid_t* tid_;  $/;"	m	struct:ThreadData	file:
+tid_	thread.h	/^	pid_t      tid_;$/;"	m	class:Thread
+writeCallback_	channel.h	/^		EventCallback writeCallback_;$/;"	m	class:Channel
+~EventLoop	eventloop.cpp	/^EventLoop::~EventLoop(){$/;"	f	class:EventLoop
+~Thread	thread.cpp	/^Thread::~Thread()$/;"	f	class:Thread

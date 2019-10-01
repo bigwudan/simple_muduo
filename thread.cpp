@@ -60,4 +60,14 @@ void Thread::start()
 	pthread_create(&pthreadId_, NULL, &startThread, data);
 }
 
+int Thread::join()
+{
+    assert(started_);
+    assert(!joined_);
+    joined_ = true;
+    return pthread_join(pthreadId_, NULL);
+
+}
+
+
 

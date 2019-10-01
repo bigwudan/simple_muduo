@@ -1,21 +1,18 @@
 #include <iostream>
 #include <unistd.h>
+#include "eventloop.h"
 #include "thread.h"
+#include "channel.h"
+
 
 void threadFunc()
 {
-	
-	std::cout << "finish" << std::endl;
 	
 }
 
 
 int main()
 {
-	Thread thread(threadFunc);
-	thread.start();
-	pthread_exit(NULL);
-	sleep(10);
 	
 }
 

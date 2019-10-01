@@ -10,7 +10,6 @@ EventLoop::EventLoop()
 {
     if(t_loopInThisThread){
         std::cout << "exists " << threadId_ << std::endl;
-    
     }else{
         t_loopInThisThread = this;
     }
@@ -36,6 +35,7 @@ void EventLoop::abortNotInLoopThread()
     std::cout << "EventLoop::abortNotInLoopThread - EventLoop " << this
         << " was created in threadId_ = " << threadId_
         << ", current thread id = " <<  static_cast<pid_t>(::syscall(SYS_gettid))<<std::endl;
+    exit(1);
 }
 
 
@@ -47,7 +47,7 @@ void EventLoop::loop()
     looping_ = true;
 
     ::poll(NULL, 0, 5*1000);
-    std::cout << "eventloop " << this << "stop looping";
+    std::cout << "eventloop " << this << "stop looping"<<std::endl;
     looping_ = false;
 
 
