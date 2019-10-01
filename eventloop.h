@@ -36,6 +36,17 @@ public:
     
         return threadId_ == static_cast<pid_t>(::syscall(SYS_gettid));
     }
+
+	void quit()
+	{
+		quit_ = true;
+
+
+	}
+
+	void updateChannel(Channel* channel);
+
+
 private:
     void abortNotInLoopThread();
 	typedef std::vector<Channel *> ChannelList;
