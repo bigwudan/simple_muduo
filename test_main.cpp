@@ -13,7 +13,7 @@ EventLoop* g_loop;
 void timeout()
 {
     std::cout<< "time out" << std::endl;
-    g_loop->quit();
+    //g_loop->quit();
 }
 
 
@@ -32,6 +32,8 @@ int main()
     struct itimerspec howlong;
     ::bzero(&howlong, sizeof howlong);
     howlong.it_value.tv_sec = 5;
+
+    ::timerfd_settime(timerfd, 0, &howlong, NULL);
     loop.loop();
     ::close(timerfd);
 
