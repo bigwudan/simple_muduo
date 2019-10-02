@@ -4,6 +4,8 @@
 #include "thread.h"
 #include "channel.h"
 #include "poller.h"
+#include "timer.h"
+#include "timerid.h"
 
 #include <cstring>
 #include <sys/timerfd.h>
@@ -13,7 +15,7 @@ EventLoop* g_loop;
 void timeout()
 {
     std::cout<< "time out" << std::endl;
-    //g_loop->quit();
+    g_loop->quit();
 }
 
 
