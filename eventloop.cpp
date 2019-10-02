@@ -15,7 +15,7 @@ EventLoop::EventLoop()
     }else{
         t_loopInThisThread = this;
     }
-
+    poller_ = new Poller(this);
 }     
 
 EventLoop::~EventLoop(){

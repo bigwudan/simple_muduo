@@ -4,11 +4,18 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Channel	channel.cpp	/^Channel::Channel(EventLoop* loop, int fdArg)$/;"	f	class:Channel
 Channel	channel.h	/^class Channel$/;"	c
+ChannelList	eventloop.h	/^	typedef std::vector<Channel *> ChannelList;$/;"	t	class:EventLoop
+ChannelList	poller.h	/^    typedef std::vector<Channel *> ChannelList;$/;"	t	class:Poller
+ChannelMap	poller.h	/^    typedef std::map<int, Channel *> ChannelMap;$/;"	t	class:Poller
 EVENTLOOP_H	eventloop.h	2;"	d
 EventCallback	channel.h	/^	typedef std::function<void()> EventCallback;$/;"	t	class:Channel
 EventLoop	eventloop.cpp	/^EventLoop::EventLoop()$/;"	f	class:EventLoop
 EventLoop	eventloop.h	/^class EventLoop$/;"	c
+PollFdList	poller.h	/^    typedef std::vector<struct pollfd> PollFdList;$/;"	t	class:Poller
+Poller	poller.cpp	/^Poller::Poller(EventLoop* loop)$/;"	f	class:Poller
+Poller	poller.h	/^class Poller {$/;"	c
 Thread	thread.cpp	/^Thread::Thread(ThreadFunc func, const string& n)$/;"	f	class:Thread
 Thread	thread.h	/^class Thread$/;"	c
 ThreadData	thread.cpp	/^	ThreadData(ThreadFunc func,$/;"	f	struct:ThreadData
@@ -16,9 +23,13 @@ ThreadData	thread.cpp	/^struct ThreadData$/;"	s	file:
 ThreadFunc	thread.cpp	/^	typedef Thread::ThreadFunc ThreadFunc;$/;"	t	struct:ThreadData	file:
 ThreadFunc	thread.h	/^	typedef std::function<void ()> ThreadFunc;$/;"	t	class:Thread
 _CHANNEL_H	channel.h	2;"	d
+_POLLER_H	poller.h	2;"	d
 _THREAD_H	thread.h	2;"	d
 abortNotInLoopThread	eventloop.cpp	/^void EventLoop::abortNotInLoopThread()$/;"	f	class:EventLoop
+activeChannels_	eventloop.h	/^	ChannelList activeChannels_;$/;"	m	class:EventLoop
 assertInLoopThread	eventloop.h	/^    void assertInLoopThread(){$/;"	f	class:EventLoop
+assertInLoopThread	poller.h	/^    void assertInLoopThread(){$/;"	f	class:Poller
+channels_	poller.h	/^    ChannelMap channels_;$/;"	m	class:Poller
 disableAll	channel.h	/^	void disableAll(){ events_ = kNoneEvent; update();}$/;"	f	class:Channel
 disableWriting	channel.h	/^	void disableWriting(){ events_ &= ~kWriteEvent; update();}$/;"	f	class:Channel
 enableReading	channel.h	/^	void enableReading(){ events_ |= kReadEvent; update();}$/;"	f	class:Channel
@@ -28,19 +39,25 @@ events	channel.h	/^	int events() const {return events_;}$/;"	f	class:Channel
 events_	channel.h	/^		int events_;$/;"	m	class:Channel
 fd	channel.h	/^	int fd() const {return fd_;}$/;"	f	class:Channel
 fd_	channel.h	/^		const int fd_;$/;"	m	class:Channel
+fillActiveChannels	poller.cpp	/^void Poller::fillActiveChannels(int numEvents,$/;"	f	class:Poller
 func_	thread.cpp	/^	ThreadFunc func_;$/;"	m	struct:ThreadData	file:
 func_	thread.h	/^	ThreadFunc func_;$/;"	m	class:Thread
-g_loop	test_main.cpp	/^EventLoop * g_loop;$/;"	v
+g_loop	test_main.cpp	/^EventLoop* g_loop;$/;"	v
 getCurrPid	eventloop.cpp	/^getCurrPid()$/;"	f
 getEventLoopOfCurrentThread	eventloop.cpp	/^EventLoop* getEventLoopOfCurrentThread()$/;"	f
+handleEvent	channel.cpp	/^void Channel::handleEvent(){$/;"	f	class:Channel
 index	channel.h	/^	int index(){return index_;}$/;"	f	class:Channel
 index_	channel.h	/^		int index_;$/;"	m	class:Channel
 isInLoopThread	eventloop.h	/^    bool isInLoopThread() const{$/;"	f	class:EventLoop
 isNoneEvent	channel.h	/^	bool isNoneEvent() const {return events_ == kNoneEvent;}$/;"	f	class:Channel
 join	thread.cpp	/^int Thread::join()$/;"	f	class:Thread
 joined_	thread.h	/^	bool       joined_;$/;"	m	class:Thread
-kNodeEvent	channel.h	/^		static const int kNodeEvent;$/;"	m	class:Channel
+kNoneEvent	channel.cpp	/^const int Channel::kNoneEvent = 0;$/;"	m	class:Channel	file:
+kNoneEvent	channel.h	/^		static const int kNoneEvent;$/;"	m	class:Channel
+kPollTimeMs	eventloop.cpp	/^const int kPollTimeMs = 10000;$/;"	v
+kReadEvent	channel.cpp	/^const int Channel::kReadEvent =0;$/;"	m	class:Channel	file:
 kReadEvent	channel.h	/^		static const int kReadEvent;$/;"	m	class:Channel
+kWriteEvent	channel.cpp	/^const int Channel::kWriteEvent = 0;$/;"	m	class:Channel	file:
 kWriteEvent	channel.h	/^		static const int kWriteEvent;$/;"	m	class:Channel
 loop	eventloop.cpp	/^void EventLoop::loop()$/;"	f	class:EventLoop
 loop_	channel.h	/^		EventLoop* loop_;$/;"	m	class:Channel
@@ -52,7 +69,13 @@ name_	thread.h	/^	string     name_;$/;"	m	class:Thread
 numCreated	thread.h	/^	static int numCreated() { return numCreated_; }$/;"	f	class:Thread
 numCreated_	thread.h	/^	static int numCreated_;$/;"	m	class:Thread
 ownerLoop	channel.h	/^	EventLoop* ownerLoop(){return loop_;}$/;"	f	class:Channel
+ownerLoop_	poller.h	/^    EventLoop* ownerLoop_;$/;"	m	class:Poller
+poll	poller.cpp	/^int Poller::poll(int timeoutMs, ChannelList* activeChannels)$/;"	f	class:Poller
+poller_	eventloop.h	/^	Poller * poller_;$/;"	m	class:EventLoop
+pollfds_	poller.h	/^    PollFdList pollfds_;$/;"	m	class:Poller
 pthreadId_	thread.h	/^	pthread_t  pthreadId_;$/;"	m	class:Thread
+quit	eventloop.h	/^	void quit()$/;"	f	class:EventLoop
+quit_	eventloop.h	/^	bool quit_;$/;"	m	class:EventLoop
 readCallback_	channel.h	/^		EventCallback readCallback_;$/;"	m	class:Channel
 revents_	channel.h	/^		int revents_;$/;"	m	class:Channel
 runInThread	thread.cpp	/^	void runInThread()$/;"	f	struct:ThreadData
@@ -66,11 +89,15 @@ startThread	thread.cpp	/^void* startThread(void* obj)$/;"	f
 started	thread.h	/^	bool started() const { return started_; }$/;"	f	class:Thread
 started_	thread.h	/^	bool       started_;$/;"	m	class:Thread
 t_loopInThisThread	eventloop.cpp	/^EventLoop* t_loopInThisThread = 0;$/;"	v
-threadFunc	test_main.cpp	/^void threadFunc()$/;"	f
-threadId_	eventloop.h	/^    const pid_t threadId_;$/;"	m	class:EventLoop
+threadId_	eventloop.h	/^	const pid_t threadId_;$/;"	m	class:EventLoop
 tid	thread.h	/^	pid_t tid() const { return tid_; }$/;"	f	class:Thread
 tid_	thread.cpp	/^	pid_t* tid_;  $/;"	m	struct:ThreadData	file:
 tid_	thread.h	/^	pid_t      tid_;$/;"	m	class:Thread
+timeout	test_main.cpp	/^void timeout()$/;"	f
+update	channel.cpp	/^void Channel::update(){$/;"	f	class:Channel
+updateChannel	eventloop.cpp	/^void EventLoop::updateChannel(Channel* channel)$/;"	f	class:EventLoop
+updateChannel	poller.cpp	/^void Poller::updateChannel(Channel* channel)$/;"	f	class:Poller
 writeCallback_	channel.h	/^		EventCallback writeCallback_;$/;"	m	class:Channel
 ~EventLoop	eventloop.cpp	/^EventLoop::~EventLoop(){$/;"	f	class:EventLoop
+~Poller	poller.cpp	/^Poller::~Poller()$/;"	f	class:Poller
 ~Thread	thread.cpp	/^Thread::~Thread()$/;"	f	class:Thread

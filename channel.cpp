@@ -1,6 +1,7 @@
 #include <poll.h>
 
 #include "channel.h"
+#include "eventloop.h"
 
 
 const int Channel::kNoneEvent = 0;
@@ -20,7 +21,7 @@ Channel::Channel(EventLoop* loop, int fdArg)
     
 void Channel::update(){
     
-    //loop_->updateChannel(this);
+    loop_->updateChannel(this);
     
 }   
 

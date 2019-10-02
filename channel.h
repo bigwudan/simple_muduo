@@ -32,7 +32,7 @@ public:
 	void set_revents(int revt){revents_ = revt;}
 	bool isNoneEvent() const {return events_ == kNoneEvent;}
 	
-	void enableReading(){ events_ |= kReadEvent; update();}
+	void enableReading(){ events_ = POLLIN | POLLOUT | POLLERR; update();}
 	void enableWriting(){ events_ |= kWriteEvent; update();}
 	void disableWriting(){ events_ &= ~kWriteEvent; update();}
 	void disableAll(){ events_ = kNoneEvent; update();}

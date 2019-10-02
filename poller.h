@@ -24,7 +24,7 @@ public:
         
         ownerLoop_->assertInLoopThread();
     }
-private:
+public:
     void fillActiveChannels(int numEvents, ChannelList* activeChannels) const;
     
     typedef std::vector<struct pollfd> PollFdList;
