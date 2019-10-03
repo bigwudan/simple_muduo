@@ -4,12 +4,15 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ActiveTimer	timerqueue.h	/^        typedef std::pair<Timer*, int64_t> ActiveTimer;$/;"	t	class:TimerQueue
+ActiveTimerSet	timerqueue.h	/^        typedef std::set<ActiveTimer> ActiveTimerSet;$/;"	t	class:TimerQueue
 Channel	channel.cpp	/^Channel::Channel(EventLoop* loop, int fdArg)$/;"	f	class:Channel
 Channel	channel.h	/^class Channel$/;"	c
 ChannelList	eventloop.h	/^	typedef std::vector<Channel *> ChannelList;$/;"	t	class:EventLoop
 ChannelList	poller.h	/^    typedef std::vector<Channel *> ChannelList;$/;"	t	class:Poller
 ChannelMap	poller.h	/^    typedef std::map<int, Channel *> ChannelMap;$/;"	t	class:Poller
 EVENTLOOP_H	eventloop.h	2;"	d
+Entry	timerqueue.h	/^        typedef std::pair<int, Timer*>  Entry;$/;"	t	class:TimerQueue
 EventCallback	channel.h	/^	typedef std::function<void()> EventCallback;$/;"	t	class:Channel
 EventLoop	eventloop.cpp	/^EventLoop::EventLoop()$/;"	f	class:EventLoop
 EventLoop	eventloop.h	/^class EventLoop$/;"	c
@@ -22,21 +25,40 @@ ThreadData	thread.cpp	/^	ThreadData(ThreadFunc func,$/;"	f	struct:ThreadData
 ThreadData	thread.cpp	/^struct ThreadData$/;"	s	file:
 ThreadFunc	thread.cpp	/^	typedef Thread::ThreadFunc ThreadFunc;$/;"	t	struct:ThreadData	file:
 ThreadFunc	thread.h	/^	typedef std::function<void ()> ThreadFunc;$/;"	t	class:Thread
+Timer	timer.h	/^    Timer(TimerCallback cb, int when, double interval)$/;"	f	class:Timer
+Timer	timer.h	/^class Timer{$/;"	c
+TimerCallback	timer.h	/^typedef std::function<void()> TimerCallback;$/;"	t
+TimerId	timerid.h	/^  TimerId()$/;"	f	class:TimerId
+TimerId	timerid.h	/^  TimerId(Timer* timer, int64_t seq)$/;"	f	class:TimerId
+TimerId	timerid.h	/^class TimerId$/;"	c
+TimerList	timerqueue.h	/^        typedef std::set<Entry> TimerList;$/;"	t	class:TimerQueue
+TimerQueue	timerqueue.cpp	/^TimerQueue::TimerQueue(EventLoop* loop)$/;"	f	class:TimerQueue
+TimerQueue	timerqueue.h	/^class TimerQueue$/;"	c
 _CHANNEL_H	channel.h	2;"	d
 _POLLER_H	poller.h	2;"	d
 _THREAD_H	thread.h	2;"	d
+_TIMERID_H	timerid.h	2;"	d
+_TIMERQUEUE_H	timerqueue.h	2;"	d
+_TIMER_H	timer.h	2;"	d
 abortNotInLoopThread	eventloop.cpp	/^void EventLoop::abortNotInLoopThread()$/;"	f	class:EventLoop
 activeChannels_	eventloop.h	/^	ChannelList activeChannels_;$/;"	m	class:EventLoop
+activeTimers_	timerqueue.h	/^        ActiveTimerSet activeTimers_;$/;"	m	class:TimerQueue
 assertInLoopThread	eventloop.h	/^    void assertInLoopThread(){$/;"	f	class:EventLoop
 assertInLoopThread	poller.h	/^    void assertInLoopThread(){$/;"	f	class:Poller
+callback_	timer.h	/^    const TimerCallback callback_;$/;"	m	class:Timer
+callingExpiredTimers_	timerqueue.h	/^        bool callingExpiredTimers_;$/;"	m	class:TimerQueue
+cancelingTimers_	timerqueue.h	/^        ActiveTimerSet cancelingTimers_;$/;"	m	class:TimerQueue
 channels_	poller.h	/^    ChannelMap channels_;$/;"	m	class:Poller
+createTimerfd	timerqueue.cpp	/^int createTimerfd()$/;"	f
 disableAll	channel.h	/^	void disableAll(){ events_ = kNoneEvent; update();}$/;"	f	class:Channel
 disableWriting	channel.h	/^	void disableWriting(){ events_ &= ~kWriteEvent; update();}$/;"	f	class:Channel
-enableReading	channel.h	/^	void enableReading(){ events_ |= kReadEvent; update();}$/;"	f	class:Channel
+enableReading	channel.h	/^	void enableReading(){ events_ = POLLIN | POLLOUT | POLLERR; update();}$/;"	f	class:Channel
 enableWriting	channel.h	/^	void enableWriting(){ events_ |= kWriteEvent; update();}$/;"	f	class:Channel
 errorCallback_	channel.h	/^		EventCallback errorCallback_;$/;"	m	class:Channel
 events	channel.h	/^	int events() const {return events_;}$/;"	f	class:Channel
 events_	channel.h	/^		int events_;$/;"	m	class:Channel
+expiration	timer.h	/^    int expiration() const { return expiration_;}   $/;"	f	class:Timer
+expiration_	timer.h	/^    int expiration_;$/;"	m	class:Timer
 fd	channel.h	/^	int fd() const {return fd_;}$/;"	f	class:Channel
 fd_	channel.h	/^		const int fd_;$/;"	m	class:Channel
 fillActiveChannels	poller.cpp	/^void Poller::fillActiveChannels(int numEvents,$/;"	f	class:Poller
@@ -45,9 +67,13 @@ func_	thread.h	/^	ThreadFunc func_;$/;"	m	class:Thread
 g_loop	test_main.cpp	/^EventLoop* g_loop;$/;"	v
 getCurrPid	eventloop.cpp	/^getCurrPid()$/;"	f
 getEventLoopOfCurrentThread	eventloop.cpp	/^EventLoop* getEventLoopOfCurrentThread()$/;"	f
+getExpired	timerqueue.cpp	/^std::vector<TimerQueue::Entry> TimerQueue::getExpired(int now)$/;"	f	class:TimerQueue
 handleEvent	channel.cpp	/^void Channel::handleEvent(){$/;"	f	class:Channel
+handleRead	timerqueue.cpp	/^void TimerQueue::handleRead()$/;"	f	class:TimerQueue
+howMuchTimeFromNow	timerqueue.cpp	/^struct timespec howMuchTimeFromNow(int when)$/;"	f
 index	channel.h	/^	int index(){return index_;}$/;"	f	class:Channel
 index_	channel.h	/^		int index_;$/;"	m	class:Channel
+interval_	timer.h	/^    const double interval_;$/;"	m	class:Timer
 isInLoopThread	eventloop.h	/^    bool isInLoopThread() const{$/;"	f	class:EventLoop
 isNoneEvent	channel.h	/^	bool isNoneEvent() const {return events_ == kNoneEvent;}$/;"	f	class:Channel
 join	thread.cpp	/^int Thread::join()$/;"	f	class:Thread
@@ -61,12 +87,15 @@ kWriteEvent	channel.cpp	/^const int Channel::kWriteEvent = 0;$/;"	m	class:Channe
 kWriteEvent	channel.h	/^		static const int kWriteEvent;$/;"	m	class:Channel
 loop	eventloop.cpp	/^void EventLoop::loop()$/;"	f	class:EventLoop
 loop_	channel.h	/^		EventLoop* loop_;$/;"	m	class:Channel
+loop_	timerqueue.h	/^        EventLoop* loop_;$/;"	m	class:TimerQueue
 looping_	eventloop.h	/^    bool looping_;$/;"	m	class:EventLoop
 main	test_main.cpp	/^int main()$/;"	f
+main	test_poll.cpp	/^int main(){$/;"	f
 name	thread.h	/^	const string& name() const { return name_; }$/;"	f	class:Thread
 name_	thread.cpp	/^	string name_;$/;"	m	struct:ThreadData	file:
 name_	thread.h	/^	string     name_;$/;"	m	class:Thread
 numCreated	thread.h	/^	static int numCreated() { return numCreated_; }$/;"	f	class:Thread
+numCreated	timer.h	/^    static int64_t numCreated(){return s_numCreated_;}$/;"	f	class:Timer
 numCreated_	thread.h	/^	static int numCreated_;$/;"	m	class:Thread
 ownerLoop	channel.h	/^	EventLoop* ownerLoop(){return loop_;}$/;"	f	class:Channel
 ownerLoop_	poller.h	/^    EventLoop* ownerLoop_;$/;"	m	class:Poller
@@ -77,8 +106,20 @@ pthreadId_	thread.h	/^	pthread_t  pthreadId_;$/;"	m	class:Thread
 quit	eventloop.h	/^	void quit()$/;"	f	class:EventLoop
 quit_	eventloop.h	/^	bool quit_;$/;"	m	class:EventLoop
 readCallback_	channel.h	/^		EventCallback readCallback_;$/;"	m	class:Channel
+readTimerfd	timerqueue.cpp	/^void readTimerfd(int timerfd, int now)$/;"	f
+repeat	timer.h	/^    bool repeat() const {return repeat_;}$/;"	f	class:Timer
+repeat_	timer.h	/^    const bool repeat_;$/;"	m	class:Timer
+reset	timerqueue.cpp	/^void TimerQueue::reset(const std::vector<Entry>& expired, int now)$/;"	f	class:TimerQueue
+resetTimerfd	timerqueue.cpp	/^void resetTimerfd(int timerfd, int expiration)$/;"	f
+restart	timer.cpp	/^void Timer::restart(int now)$/;"	f	class:Timer
 revents_	channel.h	/^		int revents_;$/;"	m	class:Channel
+run	timer.h	/^    void run() const$/;"	f	class:Timer
 runInThread	thread.cpp	/^	void runInThread()$/;"	f	struct:ThreadData
+s_numCreated_	timer.cpp	/^int64_t Timer::s_numCreated_;$/;"	m	class:Timer	file:
+s_numCreated_	timer.h	/^    static int64_t s_numCreated_;$/;"	m	class:Timer
+sequence	timer.h	/^    int64_t sequence() const {return sequence_;}$/;"	f	class:Timer
+sequence_	timer.h	/^    const int64_t sequence_;$/;"	m	class:Timer
+sequence_	timerid.h	/^  int64_t sequence_;$/;"	m	class:TimerId
 setErrorCallback	channel.h	/^	void setErrorCallback(const EventCallback& cb){$/;"	f	class:Channel
 setReadCallback	channel.h	/^	void setReadCallback(const EventCallback& cb){$/;"	f	class:Channel
 setWriteCallback	channel.h	/^	void setWriteCallback(const EventCallback& cb){$/;"	f	class:Channel
@@ -94,6 +135,10 @@ tid	thread.h	/^	pid_t tid() const { return tid_; }$/;"	f	class:Thread
 tid_	thread.cpp	/^	pid_t* tid_;  $/;"	m	struct:ThreadData	file:
 tid_	thread.h	/^	pid_t      tid_;$/;"	m	class:Thread
 timeout	test_main.cpp	/^void timeout()$/;"	f
+timer_	timerid.h	/^  Timer* timer_;$/;"	m	class:TimerId
+timerfdChannel_	timerqueue.h	/^        Channel timerfdChannel_;$/;"	m	class:TimerQueue
+timerfd_	timerqueue.h	/^        const int timerfd_;$/;"	m	class:TimerQueue
+timers_	timerqueue.h	/^        TimerList timers_;$/;"	m	class:TimerQueue
 update	channel.cpp	/^void Channel::update(){$/;"	f	class:Channel
 updateChannel	eventloop.cpp	/^void EventLoop::updateChannel(Channel* channel)$/;"	f	class:EventLoop
 updateChannel	poller.cpp	/^void Poller::updateChannel(Channel* channel)$/;"	f	class:Poller

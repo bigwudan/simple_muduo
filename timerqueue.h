@@ -4,10 +4,11 @@
 #include <iostream>
 #include <cstdint>
 #include <set>
+#include <cstring>
+#include "channel.h"
 
 class Timer;
 class EventLoop;
-class Channel;
 
 class TimerQueue
 {
@@ -30,6 +31,7 @@ class TimerQueue
         void handleRead();
 
         std::vector<Entry> getExpired(int now);
+		void reset(const std::vector<Entry>& expired, int now);
         bool insert(Timer* timer);
 
         EventLoop* loop_;
