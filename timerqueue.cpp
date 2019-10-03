@@ -23,6 +23,7 @@ struct timespec howMuchTimeFromNow(int when)
 {
   struct timespec ts;
   ts.tv_sec = when;
+  ts.tv_nsec = 0;
   return ts;
 }
 
@@ -43,9 +44,13 @@ void resetTimerfd(int timerfd, int expiration)
   memset(&newValue, 0, sizeof newValue);
   memset(&oldValue, 0, sizeof oldValue);
   newValue.it_value = howMuchTimeFromNow(expiration);
+  
+
+
   int ret = ::timerfd_settime(timerfd, 0, &newValue, &oldValue);
-  if (ret)
+  if (ret == -1)
   {
+      std::cout << "set time err" << std::endl;
   }
 }
 
