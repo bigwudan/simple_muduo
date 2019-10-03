@@ -99,7 +99,7 @@ void TimerQueue::reset(const std::vector<Entry>& expired, int now)
 
 void TimerQueue::handleRead()
 {
-	int now = 10;
+	int now = time(NULL);
 	readTimerfd(timerfd_, now);
 
 	std::vector<Entry> expired = getExpired(now);
@@ -127,37 +127,31 @@ TimerQueue::TimerQueue(EventLoop* loop)
     timers_(),
     callingExpiredTimers_(false)
 {
-//	timerfdChannel_.setReadCallback(
-//			std::bind(&TimerQueue::handleRead, this));
-//	timerfdChannel_.enableReading();
+	timerfdChannel_.setReadCallback(
+			std::bind(&TimerQueue::handleRead, this));
+	timerfdChannel_.enableReading();
 }
 
 
 
 bool TimerQueue::insert(Timer* timer)
 {
+	bool earliestChanged = false;
+	int when = timer->expiration();
+	TimerList::iterator it = timers_.begin();
+	if (it == timers_.end() || when < it->first)
+	{
+		earliestChanged = true;
+	}
+	{
+		timers_.insert(Entry(when, timer));
+	}
+	{
+		activeTimers_.insert(ActiveTimer(timer, timer->sequence()));
+	}
 
 
-  bool earliestChanged = false;
-  int when = timer->expiration();
-  TimerList::iterator it = timers_.begin();
-  if (it == timers_.end() || when < it->first)
-  {
-    earliestChanged = true;
-  }
-  {
-    std::pair<TimerList::iterator, bool> result
-      = timers_.insert(Entry(when, timer));
-     (void)result;
-  }
-  {
-    std::pair<ActiveTimerSet::iterator, bool> result
-      = activeTimers_.insert(ActiveTimer(timer, timer->sequence()));
-    (void)result;
-  }
-
-
-  return earliestChanged;
+	return earliestChanged;
 }
 
 

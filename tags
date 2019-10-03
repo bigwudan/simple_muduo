@@ -73,6 +73,7 @@ handleRead	timerqueue.cpp	/^void TimerQueue::handleRead()$/;"	f	class:TimerQueue
 howMuchTimeFromNow	timerqueue.cpp	/^struct timespec howMuchTimeFromNow(int when)$/;"	f
 index	channel.h	/^	int index(){return index_;}$/;"	f	class:Channel
 index_	channel.h	/^		int index_;$/;"	m	class:Channel
+insert	timerqueue.cpp	/^bool TimerQueue::insert(Timer* timer)$/;"	f	class:TimerQueue
 interval_	timer.h	/^    const double interval_;$/;"	m	class:Timer
 isInLoopThread	eventloop.h	/^    bool isInLoopThread() const{$/;"	f	class:EventLoop
 isNoneEvent	channel.h	/^	bool isNoneEvent() const {return events_ == kNoneEvent;}$/;"	f	class:Channel

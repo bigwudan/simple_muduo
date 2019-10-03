@@ -14,7 +14,7 @@ public:
         expiration_(when),
         interval_(interval),
         repeat_(interval > 0.0),
-        sequence_(0)
+        sequence_(s_numCreated_++)
     {}
 
     void run() const
