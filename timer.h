@@ -5,10 +5,10 @@
 #include <cstdint>
 #include <functional>
 
+typedef std::function<void()> TimerCallback;
 class Timer{
 
 public:
-    typedef std::function<void()> TimerCallback;
     Timer(TimerCallback cb, int when, double interval)
         : callback_(std::move(cb)),
         expiration_(when),

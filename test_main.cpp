@@ -6,6 +6,7 @@
 #include "poller.h"
 #include "timer.h"
 #include "timerid.h"
+#include "timerqueue.h"
 
 #include <cstring>
 #include <sys/timerfd.h>
