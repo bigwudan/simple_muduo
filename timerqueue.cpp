@@ -133,6 +133,7 @@ TimerQueue::TimerQueue(EventLoop* loop)
 }
 
 
+TimerQueue::~TimerQueue(){};
 
 bool TimerQueue::insert(Timer* timer)
 {
@@ -157,8 +158,23 @@ bool TimerQueue::insert(Timer* timer)
 
 
 
+TimerId TimerQueue::addTimer(TimerCallback cb,
+        int when,
+        double interval)
+{
+    Timer* timer = new Timer(std::move(cb), when, interval);
+    addTimerInLoop(timer);
+    return TimerId(timer, timer->sequence());
+}
 
-
+void TimerQueue::addTimerInLoop(Timer* timer)
+{
+    bool earliestChanged = insert(timer);
+    if (earliestChanged)
+    {
+        resetTimerfd(timerfd_, timer->expiration());
+    }
+}
 
 
 

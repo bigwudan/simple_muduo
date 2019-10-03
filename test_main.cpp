@@ -13,31 +13,20 @@
 
 EventLoop* g_loop;
 
-void timeout()
+void out_time()
 {
-    std::cout<< "time out" << std::endl;
-    g_loop->quit();
+    std::cout << "outtime" << std::endl;
 }
-
 
 int main()
 {
     
     EventLoop loop;
     g_loop = &loop;
-    int timerfd = ::timerfd_create(CLOCK_MONOTONIC, TFD_NONBLOCK|TFD_CLOEXEC);
-    Channel channel(&loop, timerfd);
+    
+    TimerQueue m_queue(g_loop);
+    m_queue.addTimer(out_time, 5, 0);
 
-
-    channel.setReadCallback(timeout);
-    channel.enableReading();
-
-    struct itimerspec howlong;
-    ::bzero(&howlong, sizeof howlong);
-    howlong.it_value.tv_sec = 5;
-
-    ::timerfd_settime(timerfd, 0, &howlong, NULL);
     loop.loop();
-    ::close(timerfd);
 
 }
